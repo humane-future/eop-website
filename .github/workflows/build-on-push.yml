@@ -27,10 +27,12 @@ jobs:
             ${{ runner.os }}-node-
 
       - run: yarn install --frozen-lockfile
-      - run: yarn build
-        with:
+      - shell: bash
+        env:
           CONTENTFUL_SPACE_ID: ${{ secrets.CONTENTFUL_SPACE_ID }}
           CONTENTFUL_DELIVERY_TOKEN: ${{ secrets.CONTENTFUL_DELIVERY_TOKEN }}
+        run: |
+          yarn build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
