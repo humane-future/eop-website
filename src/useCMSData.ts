@@ -11,10 +11,14 @@ const client = createClient({
 const useCMSData = (
   defaultValue?: Entry<EntryFields>,
 ): Entry<EntryFields> | undefined => {
-  const { pathname: urlPath } = useLocation();
+  const { pathname } = useLocation();
   const [data, setData] = useState<Entry<EntryFields> | undefined>(
     defaultValue,
   );
+  const urlPath =
+    pathname.length > 1 && pathname.charAt(pathname.length - 1) === '/'
+      ? pathname.substr(0, pathname.length - 1)
+      : pathname;
   const fetchData = useCallback(async () => {
     const {
       items: [item],
