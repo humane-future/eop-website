@@ -13,6 +13,6 @@ module.exports = (api) => {
         },
       ],
     ],
-    plugins: [],
+    plugins: [['babel-plugin-styled-components', { pure: true }]],
   };
 };

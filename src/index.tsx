@@ -1,14 +1,22 @@
-import { Entry } from 'contentful';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { hydrate, render } from 'react-dom';
+import { Entry } from 'contentful';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { EntryFields } from './types';
 
 if (MODE === 'production') {
-  ReactDOM.hydrate(
-    <App data={GENERATED_PAGE_DATA as Entry<EntryFields>} />,
+  hydrate(
+    <BrowserRouter>
+      <App data={GENERATED_PAGE_DATA as Entry<EntryFields>} />
+    </BrowserRouter>,
     document.getElementById('app-wrapper'),
   );
 } else {
-  ReactDOM.render(<App />, document.getElementById('app-wrapper'));
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>,
+    document.getElementById('app-wrapper'),
+  );
 }

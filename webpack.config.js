@@ -2,6 +2,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 module.exports = ({ mode }) => {
   return {
@@ -32,9 +35,12 @@ module.exports = ({ mode }) => {
                   '@babel/preset-env',
                   {
                     targets: '> 0.25%, not dead',
+                    useBuiltIns: 'usage',
+                    corejs: 3,
                   },
                 ],
               ],
+              plugins: [['babel-plugin-styled-components', { pure: true }]],
             },
           },
         },
@@ -45,7 +51,18 @@ module.exports = ({ mode }) => {
       new HtmlWebpackPlugin({ template: './src/index.html' }),
       new DefinePlugin({
         MODE: JSON.stringify(mode),
+        'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(
+          process.env.CONTENTFUL_SPACE_ID,
+        ),
+        'process.env.CONTENTFUL_DELIVERY_TOKEN': JSON.stringify(
+          process.env.CONTENTFUL_DELIVERY_TOKEN,
+        ),
       }),
     ],
+    devServer: {
+      historyApiFallback: {
+        index: 'index.html',
+      },
+    },
   };
 };

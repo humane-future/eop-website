@@ -1,7 +1,5 @@
-import React from 'react';
 import dotenv from 'dotenv';
 import { createClient, Entry } from 'contentful';
-import { renderToNodeStream } from 'react-dom/server';
 import { finished as _finished } from 'stream';
 import { promisify } from 'util';
 import { once } from 'events';
@@ -13,8 +11,8 @@ import {
   ensureDir,
   createWriteStream,
 } from 'fs-extra';
-import App from '../src/App';
 import { EntryFields } from '../src/types';
+import ssr from '../src/ssr';
 
 dotenv.config();
 
@@ -41,7 +39,7 @@ const buildPage = async ({ template, data }: BuildPageParams) => {
 
   fileStream.write(template[0]);
 
-  const renderStream = renderToNodeStream(<App data={data} />);
+  const renderStream = ssr(data);
 
   for await (const chunk of renderStream) {
     if (!fileStream.write(chunk)) {
