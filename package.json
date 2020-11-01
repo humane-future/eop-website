@@ -12,6 +12,8 @@
     "build:serve": "yarn build && yarn serve"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
     "contentful": "^7.14.8",
     "core-js": "^3.6.5",
     "react": "^17.0.1",
