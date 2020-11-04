@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
 import { Theme } from './theme';
@@ -12,10 +12,9 @@ const Input = styled.input`
       appearance: none;
       padding: 0;
       border: 0;
-      margin: 5px;
       font-size: 2rem;
       height: 40px;
-      width: 300px;
+      width: 100%;
       padding: 10px;
 
       &:focus {
@@ -29,7 +28,12 @@ const Input = styled.input`
   }}
 `;
 
-const SearchInput = (props: object) => (
+export type SearchInputProps = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'placeholder'
+>;
+
+const SearchInput = (props: SearchInputProps) => (
   <Input placeholder="Search..." {...props} />
 );
 

@@ -17,6 +17,8 @@ const Wrapper = styled.div`
 
 const SearchWrapper = styled.div`
   margin-left: auto;
+  padding: 5px;
+  width: 310px;
 `;
 
 const Header = styled.div`
@@ -29,11 +31,15 @@ const Header = styled.div`
   }}
 `;
 
-const TopBar = () => (
+export interface TopBarProps {
+  onOpenModal?: () => void;
+}
+
+const TopBar = ({ onOpenModal }: TopBarProps) => (
   <Wrapper>
     <Header>End of Power</Header>
     <SearchWrapper>
-      <SearchInput />
+      <SearchInput onKeyDown={onOpenModal} />
     </SearchWrapper>
   </Wrapper>
 );

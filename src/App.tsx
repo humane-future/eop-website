@@ -1,5 +1,5 @@
 import { Entry } from 'contentful';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Contents from './Contents';
 import GlobalStyles from './GlobalStyles';
@@ -15,6 +15,15 @@ export interface AppProps {
 
 const App = ({ data: defaultData }: AppProps) => {
   const cmsData = useCMSData(defaultData);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = useCallback(() => {
+    setModalOpen(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, []);
 
   if (!cmsData) {
     return null;
@@ -24,9 +33,11 @@ const App = ({ data: defaultData }: AppProps) => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <div>
-        <TopBar />
+        <TopBar onOpenModal={openModal} />
         <Contents />
-        <ModalWithBackdrop>12345</ModalWithBackdrop>
+        <ModalWithBackdrop onClose={closeModal} open={isModalOpen}>
+          &nbsp;
+        </ModalWithBackdrop>
       </div>
     </ThemeProvider>
   );

@@ -1,12 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
+import Paragraph from './Paragraph';
+
+const Wrapper = styled.div`
+  margin: 0 20px;
+`;
 
 const Contents = () => {
   return (
-    <div>
+    <Wrapper>
       {Array(30)
         .fill('')
         .map((value, index) => (
-          <p key={index}>
+          <Paragraph key={index}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dolor
             dui, congue id venenatis a, consectetur sit amet erat. Nulla
             facilisi. Duis pharetra mollis quam, molestie tristique nisi
@@ -21,9 +27,9 @@ const Contents = () => {
             eget lobortis purus. Nunc condimentum, metus non pulvinar ultrices,
             quam urna laoreet nisl, eget euismod dolor lacus in arcu. Ut blandit
             quam vitae efficitur viverra. Morbi ut interdum ex.
-          </p>
+          </Paragraph>
         ))}
-    </div>
+    </Wrapper>
   );
 };
 

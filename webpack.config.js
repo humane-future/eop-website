@@ -6,6 +6,25 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
+const babel = {
+  loader: 'babel-loader',
+  options: {
+    presets: [
+      '@babel/preset-typescript',
+      '@babel/preset-react',
+      [
+        '@babel/preset-env',
+        {
+          targets: '> 0.25%, not dead',
+          useBuiltIns: 'usage',
+          corejs: 3,
+        },
+      ],
+    ],
+    plugins: [['babel-plugin-styled-components', { pure: true }]],
+  },
+};
+
 module.exports = ({ mode }) => {
   return {
     mode,
@@ -25,24 +44,19 @@ module.exports = ({ mode }) => {
         {
           test: /\.tsx?$/,
           exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                '@babel/preset-typescript',
-                '@babel/preset-react',
-                [
-                  '@babel/preset-env',
-                  {
-                    targets: '> 0.25%, not dead',
-                    useBuiltIns: 'usage',
-                    corejs: 3,
-                  },
-                ],
-              ],
-              plugins: [['babel-plugin-styled-components', { pure: true }]],
+          use: babel,
+        },
+        {
+          test: /\.inline\.svg$/,
+          use: [
+            babel,
+            {
+              loader: 'react-svg-loader',
+              options: {
+                jsx: true,
+              },
             },
-          },
+          ],
         },
       ],
     },
