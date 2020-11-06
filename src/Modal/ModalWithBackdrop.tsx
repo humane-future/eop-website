@@ -13,6 +13,8 @@ export interface ModalWithBackdropProps {
   children: ReactNode;
   open: boolean;
   onClose?: () => void;
+  searchValue: string;
+  setSearchValue: (key: string) => void;
 }
 
 const Wrapper = styled(motion.div)`
@@ -42,13 +44,20 @@ const keyMap = {
 const SEARCH_RESULTS_TITLE = 'Search Results';
 
 const ModalWithBackdrop = ({
+  searchValue,
+  setSearchValue,
   children,
   open,
   onClose,
 }: ModalWithBackdropProps) => {
   useEffect(() => {
     const body = document.querySelector('body') as HTMLElement;
-    body.style.overflow = 'hidden';
+
+    if (open) {
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.overflow = 'auto';
+    }
 
     return () => {
       body.style.overflow = 'auto';
@@ -73,6 +82,7 @@ const ModalWithBackdrop = ({
   const handlers = {
     [CLOSE_MODAL_ACTION as string]: closeModal,
   };
+
   return (
     <AnimatePresence>
       {open && (
@@ -94,7 +104,13 @@ const ModalWithBackdrop = ({
                   {SEARCH_RESULTS_TITLE}
                 </Heading>
                 <SearchWrapper>
-                  <SearchInput onKeyUp={onKeyUp} autoFocus />
+                  <SearchInput
+                    value={searchValue}
+                    onChange={setSearchValue}
+                    active={open}
+                    onKeyUp={onKeyUp}
+                    autoFocus
+                  />
                 </SearchWrapper>
                 {children}
               </Dialog>

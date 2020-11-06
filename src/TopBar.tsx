@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import SearchInput from './SearchInput';
 
@@ -32,16 +32,41 @@ const Header = styled.div`
 `;
 
 export interface TopBarProps {
+  isModalOpen: boolean;
   onOpenModal?: () => void;
+  searchValue: string;
+  setSearchValue: (key: string) => void;
 }
 
-const TopBar = ({ onOpenModal }: TopBarProps) => (
-  <Wrapper>
-    <Header>End of Power</Header>
-    <SearchWrapper>
-      <SearchInput onKeyDown={onOpenModal} />
-    </SearchWrapper>
-  </Wrapper>
-);
+const TopBar = ({
+  searchValue,
+  setSearchValue,
+  isModalOpen,
+  onOpenModal,
+}: TopBarProps) => {
+  const onChange = useCallback(
+    (value) => {
+      setSearchValue(value);
+      if (!isModalOpen) {
+        onOpenModal?.();
+      }
+    },
+    [setSearchValue],
+  );
+  return (
+    <Wrapper>
+      <Header>End of Power</Header>
+      <SearchWrapper>
+        {!isModalOpen && (
+          <SearchInput
+            value={searchValue}
+            onChange={onChange}
+            active={!isModalOpen}
+          />
+        )}
+      </SearchWrapper>
+    </Wrapper>
+  );
+};
 
 export default TopBar;

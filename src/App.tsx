@@ -15,6 +15,7 @@ export interface AppProps {
 
 const App = ({ data: defaultData }: AppProps) => {
   const cmsData = useCMSData(defaultData);
+  const [searchValue, setSearchValue] = useState('');
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = useCallback(() => {
@@ -33,9 +34,19 @@ const App = ({ data: defaultData }: AppProps) => {
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <div>
-        <TopBar onOpenModal={openModal} />
+        <TopBar
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          isModalOpen={isModalOpen}
+          onOpenModal={openModal}
+        />
         <Contents />
-        <ModalWithBackdrop onClose={closeModal} open={isModalOpen}>
+        <ModalWithBackdrop
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onClose={closeModal}
+          open={isModalOpen}
+        >
           &nbsp;
         </ModalWithBackdrop>
       </div>

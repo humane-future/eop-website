@@ -2,7 +2,7 @@ import { lighten } from 'polished';
 import React, { MouseEventHandler } from 'react';
 import styled, { css } from 'styled-components';
 import { Theme } from '../../theme';
-import CloseIcon from './close.inline.svg';
+import CloseIcon from './CloseIcon';
 
 const Button = styled.button`
   ${({ theme }: { theme: Theme }) => css`
@@ -14,9 +14,9 @@ const Button = styled.button`
     border: 0;
     width: 30px;
     height: 30px;
-    fill: ${theme.colors.OrangeRedCrayola};
     cursor: pointer;
     transition: all 300ms ease-in-out;
+    fill: ${theme.colors.OrangeRedCrayola};
 
     &:hover {
       width: 35px;
